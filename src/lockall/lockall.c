@@ -5,7 +5,7 @@
 #include <errno.h>
 
 static void wrerr(const char *p) {
-  if (p) {
+  if(p) {
     const char *q = p + strlen(p);
     ssize_t     n;
 
@@ -24,7 +24,7 @@ static void init(void) __attribute__((constructor));
 static void init(void) {
   int saved_errno = errno;
 
-  if (mlockall(MCL_CURRENT | MCL_FUTURE) == -1) {
+  if(mlockall(MCL_CURRENT | MCL_FUTURE) == -1) {
     const char *errmsg = strerror(errno);
     wrerr("Cannot lock all memory: ");
     wrerr(errmsg);
@@ -32,5 +32,6 @@ static void init(void) {
     exit(127);
   } else
     wrerr("All memory locked.\n");
+
   errno = saved_errno;
 }
